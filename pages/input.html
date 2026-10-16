@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Izin - IZIN GO MURID</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="../assets/logo-man-bantaeng.png" alt="Logo MAN Bantaeng" class="logo">
+        </div>
+        
+        <h1 class="title">FORM IZIN KELUAR</h1>
+        <h2 class="subtitle">MAN BANTAENG</h2>
+        
+        <div class="form-container">
+            <div id="alertSuccess" class="alert alert-success"></div>
+            <div id="alertError" class="alert alert-error"></div>
+            
+            <form id="izinForm">
+                <div class="form-group">
+                    <label for="namaLengkap">Nama Lengkap *</label>
+                    <input type="text" id="namaLengkap" name="namaLengkap" required placeholder="Masukkan nama lengkap">
+                </div>
+                
+                <div class="form-group">
+                    <label for="kelas">Kelas *</label>
+                    <select id="kelas" name="kelas" required>
+                        <option value="">-- Pilih Kelas --</option>
+                        <option value="X.1">X.1</option>
+                        <option value="X.2">X.2</option>
+                        <option value="X.3">X.3</option>
+                        <option value="X.4">X.4</option>
+                        <option value="XI.1">XI.1</option>
+                        <option value="XI.2">XI.2</option>
+                        <option value="XI.3">XI.3</option>
+                        <option value="XI.4">XI.4</option>
+                        <option value="XII.1">XII.1</option>
+                        <option value="XII.2">XII.2</option>
+                        <option value="XII.3">XII.3</option>
+                        <option value="XII.4">XII.4</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hari">Hari *</label>
+                        <select id="hari" name="hari" required>
+                            <option value="">-- Pilih Hari --</option>
+                            <option value="Senin">Senin</option>
+                            <option value="Selasa">Selasa</option>
+                            <option value="Rabu">Rabu</option>
+                            <option value="Kamis">Kamis</option>
+                            <option value="Jumat">Jumat</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tanggal">Tanggal *</label>
+                        <input type="number" id="tanggal" name="tanggal" min="1" max="31" required placeholder="1-31">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="jam">Jam *</label>
+                        <input type="time" id="jam" name="jam" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bulan">Bulan *</label>
+                        <select id="bulan" name="bulan" required>
+                            <option value="">-- Pilih Bulan --</option>
+                            <option value="Januari">Januari</option>
+                            <option value="Februari">Februari</option>
+                            <option value="Maret">Maret</option>
+                            <option value="April">April</option>
+                            <option value="Mei">Mei</option>
+                            <option value="Juni">Juni</option>
+                            <option value="Juli">Juli</option>
+                            <option value="Agustus">Agustus</option>
+                            <option value="September">September</option>
+                            <option value="Oktober">Oktober</option>
+                            <option value="Nopember">Nopember</option>
+                            <option value="Desember">Desember</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="yangMemberiIzin">Yang Memberi Izin *</label>
+                    <select id="yangMemberiIzin" name="yangMemberiIzin" required>
+                        <option value="">-- Pilih Pemberi Izin --</option>
+                        <option value="MUHAMMAD ARIF PITHER, S.Ag, MM">MUHAMMAD ARIF PITHER, S.Ag, MM</option>
+                        <option value="SYAFIUDDIN, S.Pd, M.Pd">SYAFIUDDIN, S.Pd, M.Pd</option>
+                        <option value="ST.HASNAH, S.Pd, MM">ST.HASNAH, S.Pd, MM</option>
+                        <option value="ST. ASMA ASIZ, S.Pd., M.Pd">ST. ASMA ASIZ, S.Pd., M.Pd</option>
+                        <option value="FATIMAH, S.Pd">FATIMAH, S.Pd</option>
+                        <option value="HERLIN, S.Pd">HERLIN, S.Pd</option>
+                        <option value="MUFLIH HAERATI, S.Si">MUFLIH HAERATI, S.Si</option>
+                        <option value="ST. SAINAB, S.Ag">ST. SAINAB, S.Ag</option>
+                        <option value="SITI JASILA, S.Pd">SITI JASILA, S.Pd</option>
+                        <option value="A. FAISAL ISMAIL, S.Pd.I">A. FAISAL ISMAIL, S.Pd.I</option>
+                        <option value="ARMAN ARDIANSYAH, S.Pd.,M.Pd">ARMAN ARDIANSYAH, S.Pd.,M.Pd</option>
+                        <option value="NURLINDA, S.Pd">NURLINDA, S.Pd</option>
+                        <option value="NURUL FAIQAH JAMAL, S.Pd">NURUL FAIQAH JAMAL, S.Pd</option>
+                        <option value="FATMAWATI, S.Pd">FATMAWATI, S.Pd</option>
+                        <option value="NURPAHMI, S.Pd">NURPAHMI, S.Pd</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="alasan">Alasan Keluar *</label>
+                    <textarea id="alasan" name="alasan" required placeholder="Jelaskan alasan keluar..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn" id="submitBtn">
+                    <span id="btnText">Kirim Data</span>
+                    <span id="btnLoading" style="display:none;">Mengirim...</span>
+                </button>
+                
+                <button type="button" class="btn back-btn" onclick="window.location.href='../index.html'">
+                    Kembali ke Beranda
+                </button>
+            </form>
+        </div>
+        
+        <footer class="footer">
+            <p>&copy; 2026 MAN Bantaeng - Zona Integritas</p>
+        </footer>
+    </div>
+    
+    <script src="../js/script.js"></script>
+</body>
+</html>
