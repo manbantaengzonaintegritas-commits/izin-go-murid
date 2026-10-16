@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - IZIN GO MURID</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="../assets/logo-man-bantaeng.png" alt="Logo MAN Bantaeng" class="logo">
+        </div>
+        
+        <h1 class="title">DASHBOARD DATA IZIN</h1>
+        <h2 class="subtitle">MAN BANTAENG</h2>
+        
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h2>Data Izin Murid</h2>
+                
+                <div class="class-selector no-print">
+                    <label for="selectClass">Pilih Kelas:</label>
+                    <select id="selectClass" onchange="loadData()">
+                        <option value="">-- Semua Kelas --</option>
+                        <option value="X.1">X.1</option>
+                        <option value="X.2">X.2</option>
+                        <option value="X.3">X.3</option>
+                        <option value="X.4">X.4</option>
+                        <option value="XI.1">XI.1</option>
+                        <option value="XI.2">XI.2</option>
+                        <option value="XI.3">XI.3</option>
+                        <option value="XI.4">XI.4</option>
+                        <option value="XII.1">XII.1</option>
+                        <option value="XII.2">XII.2</option>
+                        <option value="XII.3">XII.3</option>
+                        <option value="XII.4">XII.4</option>
+                    </select>
+                    <button onclick="printData()" class="btn" style="width:auto; padding:10px 20px; margin-left:10px;">
+                         Cetak
+                    </button>
+                    <button onclick="loadData()" class="btn" style="width:auto; padding:10px 20px; margin-left:10px;">
+                        🔄 Refresh
+                    </button>
+                </div>
+            </div>
+            
+            <div id="loading" class="loading">
+                <p>Memuat data...</p>
+            </div>
+            
+            <div id="dataContainer" class="table-container">
+                <!-- Data akan dimuat di sini -->
+            </div>
+        </div>
+        
+        <button onclick="window.location.href='../index.html'" class="btn back-btn no-print" style="margin-top:20px;">
+            Kembali ke Beranda
+        </button>
+        
+        <footer class="footer">
+            <p>&copy; 2026 MAN Bantaeng - Zona Integritas</p>
+        </footer>
+    </div>
+    
+    <script src="../js/script.js"></script>
+</body>
+</html>
