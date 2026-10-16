@@ -15,6 +15,7 @@
         <h1 class="title">DASHBOARD DATA IZIN</h1>
         <h2 class="subtitle">MAN BANTAENG</h2>
         
+        <!-- BAGIAN YANG DIPERBARUI -->
         <div class="dashboard-container">
             <div class="dashboard-header">
                 <h2>Data Izin Murid</h2>
@@ -36,12 +37,22 @@
                         <option value="XII.3">XII.3</option>
                         <option value="XII.4">XII.4</option>
                     </select>
+                    
                     <button onclick="printData()" class="btn" style="width:auto; padding:10px 20px; margin-left:10px;">
-                         Cetak
+                        🖨️ Cetak
                     </button>
+                    
                     <button onclick="loadData()" class="btn" style="width:auto; padding:10px 20px; margin-left:10px;">
                         🔄 Refresh
                     </button>
+
+                    <!-- TOMBOL DOWNLOAD EXCEL DITAMBAHKAN DI SINI -->
+                    <a href="https://docs.google.com/spreadsheets/d/1mPRldyhn6Gxv9mHe3B5D1gFjTaKpYVRFhGRfe8gHiXM/export?format=xlsx" 
+                       target="_blank" 
+                       class="btn" 
+                       style="width:auto; padding:10px 20px; margin-left:10px; background-color: #217346; color: white; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                        📥 Download Excel
+                    </a>
                 </div>
             </div>
             
@@ -53,6 +64,7 @@
                 <!-- Data akan dimuat di sini -->
             </div>
         </div>
+        <!-- AKHIR BAGIAN YANG DIPERBARUI -->
         
         <button onclick="window.location.href='../index.html'" class="btn back-btn no-print" style="margin-top:20px;">
             Kembali ke Beranda
