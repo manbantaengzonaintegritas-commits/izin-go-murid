@@ -15,42 +15,60 @@
         <h1 class="title">DASHBOARD DATA IZIN</h1>
         <h2 class="subtitle">MAN BANTAENG</h2>
         
-        <!-- BAGIAN YANG DIPERBARUI -->
         <div class="dashboard-container">
             <div class="dashboard-header">
                 <h2>Data Izin Murid</h2>
                 
-                <div class="class-selector no-print">
-                    <label for="selectClass">Pilih Kelas:</label>
-                    <select id="selectClass" onchange="loadData()">
-                        <option value="">-- Semua Kelas --</option>
-                        <option value="X.1">X.1</option>
-                        <option value="X.2">X.2</option>
-                        <option value="X.3">X.3</option>
-                        <option value="X.4">X.4</option>
-                        <option value="XI.1">XI.1</option>
-                        <option value="XI.2">XI.2</option>
-                        <option value="XI.3">XI.3</option>
-                        <option value="XI.4">XI.4</option>
-                        <option value="XII.1">XII.1</option>
-                        <option value="XII.2">XII.2</option>
-                        <option value="XII.3">XII.3</option>
-                        <option value="XII.4">XII.4</option>
-                    </select>
+                <!-- Filter Container dengan Flexbox agar rapi -->
+                <div class="class-selector no-print" style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center; margin-bottom: 10px;">
                     
-                    <button onclick="printData()" class="btn" style="width:auto; padding:10px 20px; margin-left:10px;">
-                        🖨️ Cetak
-                    </button>
-                    
-                    <button onclick="loadData()" class="btn" style="width:auto; padding:10px 20px; margin-left:10px;">
-                        🔄 Refresh
-                    </button>
+                    <!-- Pilihan Kelas -->
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <label for="selectClass">Pilih Kelas:</label>
+                        <select id="selectClass" onchange="loadData()">
+                            <option value="">-- Semua Kelas --</option>
+                            <option value="X.1">X.1</option>
+                            <option value="X.2">X.2</option>
+                            <option value="X.3">X.3</option>
+                            <option value="X.4">X.4</option>
+                            <option value="XI.1">XI.1</option>
+                            <option value="XI.2">XI.2</option>
+                            <option value="XI.3">XI.3</option>
+                            <option value="XI.4">XI.4</option>
+                            <option value="XII.1">XII.1</option>
+                            <option value="XII.2">XII.2</option>
+                            <option value="XII.3">XII.3</option>
+                            <option value="XII.4">XII.4</option>
+                        </select>
+                    </div>
 
-                    <!-- TOMBOL DOWNLOAD EXCEL DITAMBAHKAN DI SINI -->
+                    <!-- Pilihan Bulan (BARU) -->
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <label for="selectBulan">Pilih Bulan:</label>
+                        <select id="selectBulan" onchange="loadData()">
+                            <option value="">-- Semua Bulan --</option>
+                            <option value="Januari">Januari</option>
+                            <option value="Februari">Februari</option>
+                            <option value="Maret">Maret</option>
+                            <option value="April">April</option>
+                            <option value="Mei">Mei</option>
+                            <option value="Juni">Juni</option>
+                            <option value="Juli">Juli</option>
+                            <option value="Agustus">Agustus</option>
+                            <option value="September">September</option>
+                            <option value="Oktober">Oktober</option>
+                            <option value="Nopember">Nopember</option>
+                            <option value="Desember">Desember</option>
+                        </select>
+                    </div>
+
+                    <!-- Tombol Aksi -->
+                    <button onclick="printData()" class="btn" style="width:auto; padding:10px 20px;">🖨️ Cetak</button>
+                    <button onclick="loadData()" class="btn" style="width:auto; padding:10px 20px;">🔄 Refresh</button>
                     <a href="https://docs.google.com/spreadsheets/d/1mPRldyhn6Gxv9mHe3B5D1gFjTaKpYVRFhGRfe8gHiXM/export?format=xlsx" 
                        target="_blank" 
                        class="btn" 
-                       style="width:auto; padding:10px 20px; margin-left:10px; background-color: #217346; color: white; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+                       style="width:auto; padding:10px 20px; background-color: #217346; color: white; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
                         📥 Download Excel
                     </a>
                 </div>
@@ -64,7 +82,6 @@
                 <!-- Data akan dimuat di sini -->
             </div>
         </div>
-        <!-- AKHIR BAGIAN YANG DIPERBARUI -->
         
         <button onclick="window.location.href='../index.html'" class="btn back-btn no-print" style="margin-top:20px;">
             Kembali ke Beranda
