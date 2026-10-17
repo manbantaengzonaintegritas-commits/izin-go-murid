@@ -1,7 +1,5 @@
-// Konfigurasi - URL Web App Apps Script Anda
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyOsYYBsbqmzBoTYpLqKuGOrYh4psCf0Rd4B1VE7_WR0S0E1CclDtiurzrEKxVNbn0K/exec';
 
-// Fungsi untuk menampilkan alert
 function showAlert(type, message) {
     const successAlert = document.getElementById('alertSuccess');
     const errorAlert = document.getElementById('alertError');
@@ -15,14 +13,22 @@ function showAlert(type, message) {
         errorAlert.style.display = 'block';
         successAlert.style.display = 'none';
     }
-    
     setTimeout(() => {
         successAlert.style.display = 'none';
         errorAlert.style.display = 'none';
     }, 5000);
 }
 
-// Handle Form Submit (TIDAK DIUBAH)
+// FUNGSI BARU: Konversi format date picker (YYYY-MM-DD) menjadi DD/MM/YYYY
+function formatTanggalIndo(dateString) {
+    if (!dateString) return '';
+    const parts = dateString.split('-');
+    if (parts.length === 3) {
+        return `${parts[2]}/${parts[1]}/${parts[0]}`; // DD/MM/YYYY
+    }
+    return dateString;
+}
+
 const izinForm = document.getElementById('izinForm');
 if (izinForm) {
     izinForm.addEventListener('submit', async function(e) {
@@ -36,13 +42,16 @@ if (izinForm) {
         btnText.style.display = 'none';
         btnLoading.style.display = 'inline';
         
+        // BARU: Konversi tanggal ke format DD/MM/YYYY
+        const tanggalFormat = formatTanggalIndo(document.getElementById('tanggal').value);
+        
         const formData = {
             namaLengkap: document.getElementById('namaLengkap').value,
             kelas: document.getElementById('kelas').value,
             hari: document.getElementById('hari').value,
-            tanggal: document.getElementById('tanggal').value,
-            jam: document.getElementById('jam').value,
+            tanggal: tanggalFormat, // Format: 17/10/2026
             bulan: document.getElementById('bulan').value,
+            jam: document.getElementById('jam').value,
             yangMemberiIzin: document.getElementById('yangMemberiIzin').value,
             alasan: document.getElementById('alasan').value
         };
@@ -52,7 +61,6 @@ if (izinForm) {
                 method: 'POST',
                 body: JSON.stringify(formData)
             });
-            
             const result = await response.json();
             
             if (result.success) {
@@ -61,7 +69,6 @@ if (izinForm) {
             } else {
                 showAlert('error', '❌ Error: ' + result.message);
             }
-            
         } catch (error) {
             showAlert('error', '❌ Terjadi kesalahan jaringan: ' + error.message);
         } finally {
@@ -72,10 +79,9 @@ if (izinForm) {
     });
 }
 
-// Fungsi untuk load data di dashboard (DIPERBARUI DENGAN FILTER BULAN)
 async function loadData() {
     const selectedClass = document.getElementById('selectClass') ? document.getElementById('selectClass').value : '';
-    const selectedBulan = document.getElementById('selectBulan') ? document.getElementById('selectBulan').value : ''; // Ambil nilai bulan
+    const selectedBulan = document.getElementById('selectBulan') ? document.getElementById('selectBulan').value : '';
     const loading = document.getElementById('loading');
     const dataContainer = document.getElementById('dataContainer');
     
@@ -88,16 +94,13 @@ async function loadData() {
         if (selectedClass) {
             const response = await fetch(`${WEB_APP_URL}?class=${encodeURIComponent(selectedClass)}`);
             const result = await response.json();
-            
             loading.style.display = 'none';
             
             if (result.success && result.data && result.data.length > 0) {
-                // FILTER DATA BERDASARKAN BULAN DI SINI (Client-side)
                 let filteredData = result.data;
                 if (selectedBulan) {
                     filteredData = result.data.filter(row => row['Bulan'] === selectedBulan);
                 }
-                
                 if (filteredData.length > 0) {
                     displayTable(filteredData, selectedClass);
                 } else {
@@ -109,7 +112,6 @@ async function loadData() {
         } else {
             const response = await fetch(`${WEB_APP_URL}?all=true`);
             const allData = await response.json();
-            
             loading.style.display = 'none';
             
             let hasData = false;
@@ -117,12 +119,10 @@ async function loadData() {
             
             for (const [className, data] of Object.entries(allData)) {
                 if (data && data.length > 0) {
-                    // FILTER DATA BERDASARKAN BULAN DI SINI (Client-side)
                     let filteredData = data;
                     if (selectedBulan) {
                         filteredData = data.filter(row => row['Bulan'] === selectedBulan);
                     }
-
                     if (filteredData.length > 0) {
                         hasData = true;
                         allHTML += `<h3 style="margin-top:30px; color:#1e884e; border-bottom: 2px solid #1e884e; padding-bottom: 5px;">Kelas ${className}</h3>`;
@@ -130,29 +130,26 @@ async function loadData() {
                     }
                 }
             }
-            
             if (hasData) {
                 dataContainer.innerHTML = allHTML;
             } else {
                 dataContainer.innerHTML = '<div class="no-data">Belum ada data izin</div>';
             }
         }
-        
     } catch (error) {
         loading.style.display = 'none';
         dataContainer.innerHTML = `<div class="no-data" style="color:red;">Error memuat data: ${error.message}</div>`;
     }
 }
 
-// Fungsi untuk menampilkan tabel
 function displayTable(data, className) {
     const dataContainer = document.getElementById('dataContainer');
     dataContainer.innerHTML = createTableHTML(data, className);
 }
 
-// Fungsi untuk membuat HTML tabel
 function createTableHTML(data, className = '') {
-    const headers = ['Nama Lengkap', 'Kelas', 'Hari', 'Tanggal', 'Jam', 'Bulan', 'Yang Memberi Izin', 'Alasan Keluar'];
+    // Header dikembalikan ke 8 kolom (tanpa Tahun)
+    const headers = ['Nama Lengkap', 'Kelas', 'Hari', 'Tanggal', 'Bulan', 'Jam', 'Yang Memberi Izin', 'Alasan Keluar'];
     
     let html = `
         <table>
@@ -170,29 +167,21 @@ function createTableHTML(data, className = '') {
                 <td>${row['Nama Lengkap'] || '-'}</td>
                 <td>${row['Kelas'] || className || '-'}</td>
                 <td>${row['Hari'] || '-'}</td>
-                <td>${row['Tanggal'] || '-'}</td>
-                <td>${row['Jam'] || '-'}</td>
+                <td>${row['Tanggal'] || '-'}</td> <!-- Akan tampil: 17/10/2026 -->
                 <td>${row['Bulan'] || '-'}</td>
+                <td>${row['Jam'] || '-'}</td>
                 <td>${row['Yang Memberi Izin'] || '-'}</td>
                 <td>${row['Alasan Keluar'] || '-'}</td>
             </tr>
         `;
     });
     
-    html += `
-            </tbody>
-        </table>
-    `;
-    
+    html += `</tbody></table>`;
     return html;
 }
 
-// Fungsi print
-function printData() {
-    window.print();
-}
+function printData() { window.print(); }
 
-// Load data saat halaman dashboard dibuka
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('dataContainer')) {
         loadData();
