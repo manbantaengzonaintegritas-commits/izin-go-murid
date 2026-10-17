@@ -16,14 +16,13 @@ function showAlert(type, message) {
         successAlert.style.display = 'none';
     }
     
-    // Auto hide setelah 5 detik
     setTimeout(() => {
         successAlert.style.display = 'none';
         errorAlert.style.display = 'none';
     }, 5000);
 }
 
-// Handle Form Submit
+// Handle Form Submit (TIDAK DIUBAH)
 const izinForm = document.getElementById('izinForm');
 if (izinForm) {
     izinForm.addEventListener('submit', async function(e) {
@@ -33,12 +32,10 @@ if (izinForm) {
         const btnText = document.getElementById('btnText');
         const btnLoading = document.getElementById('btnLoading');
         
-        // Disable button dan tampilkan loading
         submitBtn.disabled = true;
         btnText.style.display = 'none';
         btnLoading.style.display = 'inline';
         
-        // Kumpulkan data form
         const formData = {
             namaLengkap: document.getElementById('namaLengkap').value,
             kelas: document.getElementById('kelas').value,
@@ -51,7 +48,6 @@ if (izinForm) {
         };
         
         try {
-            // Kirim data ke Google Apps Script menggunakan POST
             const response = await fetch(WEB_APP_URL, {
                 method: 'POST',
                 body: JSON.stringify(formData)
@@ -69,7 +65,6 @@ if (izinForm) {
         } catch (error) {
             showAlert('error', '❌ Terjadi kesalahan jaringan: ' + error.message);
         } finally {
-            // Enable button kembali
             submitBtn.disabled = false;
             btnText.style.display = 'inline';
             btnLoading.style.display = 'none';
@@ -77,9 +72,10 @@ if (izinForm) {
     });
 }
 
-// Fungsi untuk load data di dashboard
+// Fungsi untuk load data di dashboard (DIPERBARUI DENGAN FILTER BULAN)
 async function loadData() {
     const selectedClass = document.getElementById('selectClass') ? document.getElementById('selectClass').value : '';
+    const selectedBulan = document.getElementById('selectBulan') ? document.getElementById('selectBulan').value : ''; // Ambil nilai bulan
     const loading = document.getElementById('loading');
     const dataContainer = document.getElementById('dataContainer');
     
@@ -90,19 +86,27 @@ async function loadData() {
     
     try {
         if (selectedClass) {
-            // Load data kelas tertentu
             const response = await fetch(`${WEB_APP_URL}?class=${encodeURIComponent(selectedClass)}`);
             const result = await response.json();
             
             loading.style.display = 'none';
             
             if (result.success && result.data && result.data.length > 0) {
-                displayTable(result.data, selectedClass);
+                // FILTER DATA BERDASARKAN BULAN DI SINI (Client-side)
+                let filteredData = result.data;
+                if (selectedBulan) {
+                    filteredData = result.data.filter(row => row['Bulan'] === selectedBulan);
+                }
+                
+                if (filteredData.length > 0) {
+                    displayTable(filteredData, selectedClass);
+                } else {
+                    dataContainer.innerHTML = '<div class="no-data">Tidak ada data untuk filter yang dipilih</div>';
+                }
             } else {
                 dataContainer.innerHTML = '<div class="no-data">Tidak ada data untuk kelas ' + selectedClass + '</div>';
             }
         } else {
-            // Load semua data
             const response = await fetch(`${WEB_APP_URL}?all=true`);
             const allData = await response.json();
             
@@ -113,9 +117,17 @@ async function loadData() {
             
             for (const [className, data] of Object.entries(allData)) {
                 if (data && data.length > 0) {
-                    hasData = true;
-                    allHTML += `<h3 style="margin-top:30px; color:#1e884e; border-bottom: 2px solid #1e884e; padding-bottom: 5px;">Kelas ${className}</h3>`;
-                    allHTML += createTableHTML(data);
+                    // FILTER DATA BERDASARKAN BULAN DI SINI (Client-side)
+                    let filteredData = data;
+                    if (selectedBulan) {
+                        filteredData = data.filter(row => row['Bulan'] === selectedBulan);
+                    }
+
+                    if (filteredData.length > 0) {
+                        hasData = true;
+                        allHTML += `<h3 style="margin-top:30px; color:#1e884e; border-bottom: 2px solid #1e884e; padding-bottom: 5px;">Kelas ${className}</h3>`;
+                        allHTML += createTableHTML(filteredData);
+                    }
                 }
             }
             
