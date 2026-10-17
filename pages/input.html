@@ -58,15 +58,16 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="tanggal">Tanggal *</label>
-                        <input type="number" id="tanggal" name="tanggal" min="1" max="31" required placeholder="1-31">
+                        <label for="jam">Jam *</label>
+                        <input type="time" id="jam" name="jam" required>
                     </div>
                 </div>
                 
+                <!-- BAGIAN YANG DIPERBARUI: Tanggal (DD/MM/YYYY) dan Bulan dalam satu baris -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="jam">Jam *</label>
-                        <input type="time" id="jam" name="jam" required>
+                        <label for="tanggal">Tanggal (DD/MM/YYYY) *</label>
+                        <input type="date" id="tanggal" name="tanggal" required>
                     </div>
                     
                     <div class="form-group">
@@ -88,6 +89,7 @@
                         </select>
                     </div>
                 </div>
+                <!-- AKHIR BAGIAN YANG DIPERBARUI -->
                 
                 <div class="form-group">
                     <label for="yangMemberiIzin">Yang Memberi Izin *</label>
