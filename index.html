@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IZIN GO MURID - MAN BANTAENG</title>
-    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Link ke Manifest untuk fitur Install di HP -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e884e">
     <link rel="icon" type="image/png" href="assets/logo-man-bantaeng.png">
+    
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
@@ -16,6 +21,11 @@
         <h1 class="title">IZIN GO MURID</h1>
         <h2 class="subtitle">MAN BANTAENG</h2>
         
+        <!-- TOMBOL INSTAL DI HP (Akan muncul otomatis jika didukung browser) -->
+        <button id="installBtn" class="btn" style="display: none; margin: 0 auto 30px auto; max-width: 350px; background-color: #ff9800; font-weight: bold;">
+            📲 Instal Aplikasi di HP
+        </button>
+        
         <div class="menu-container">
             <a href="pages/input.html" class="menu-card">
                 <div class="menu-icon">📝</div>
@@ -24,7 +34,7 @@
             </a>
             
             <a href="pages/dashboard.html" class="menu-card">
-                <div class="menu-icon"></div>
+                <div class="menu-icon">📊</div>
                 <h3>Dashboard</h3>
                 <p>Lihat data izin</p>
             </a>
@@ -34,5 +44,41 @@
             <p>&copy; 2026 MAN Bantaeng - Zona Integritas</p>
         </footer>
     </div>
+
+    <!-- Script untuk menangani fitur Install PWA -->
+    <script>
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        // Mendeteksi apakah browser mendukung instalasi
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault(); // Mencegah prompt default browser
+            deferredPrompt = e;
+            // Tampilkan tombol instal kita
+            installBtn.style.display = 'block';
+        });
+
+        // Ketika tombol diklik
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt(); // Munculkan prompt instalasi bawaan HP
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    // Sembunyikan tombol setelah berhasil diinstal
+                    installBtn.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        // Mendaftarkan Service Worker agar bisa diinstal
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('Service Worker terdaftar'))
+                    .catch(error => console.log('Pendaftaran Service Worker gagal:', error));
+            });
+        }
+    </script>
 </body>
 </html>
