@@ -1,0 +1,21 @@
+{
+  "name": "IZIN GO MURID - MAN BANTAENG",
+  "short_name": "IZIN GO MURID",
+  "start_url": "https://manbantaengzonaintegritas-commits.github.io/izin-go-murid/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e884e",
+  "description": "Aplikasi pengelolaan izin murid MAN Bantaeng",
+  "icons": [
+    {
+      "src": "assets/logo-man-bantaeng.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logo-man-bantaeng.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
